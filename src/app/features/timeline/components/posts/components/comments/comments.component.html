@@ -1,0 +1,136 @@
+<section class="border border-slate-200 rounded-[16px] p-4 bg-white" aria-label="Comments">
+  <div class="flex items-center gap-2 mb-2">
+    <h3 class="font-bold text-[15px] text-slate-900">Comments</h3>
+    <span class="bg-blue-100 text-blue-600 text-[12px] font-bold px-2 py-0.5 rounded-full">
+      {{ allComments().length }}
+    </span>
+  </div>
+
+  @for (comment of allComments(); track comment._id) {
+    <div class="flex gap-2 mb-4 group">
+      <!-- User Image -->
+      <img
+        [src]="comment.commentCreator.photo"
+        [alt]="comment.commentCreator.name"
+        class="w-8 h-8 rounded-full object-cover shrink-0 mt-1 bg-slate-100 border border-slate-50"
+      />
+
+      <div class="flex-1 flex flex-col items-start min-w-0">
+        <!-- Comment Content -->
+        <div class="bg-slate-100 rounded-2xl rounded-tl-none px-3.5 py-2.5 max-w-full">
+          <div class="flex items-center gap-1.5 mb-0.5">
+            <span class="text-[13px] font-bold text-slate-900 hover:underline cursor-pointer">
+              {{ comment.commentCreator.name }}
+            </span>
+          </div>
+
+          <div class="flex items-center gap-1 text-[12px] text-slate-500 mb-1">
+            <span>@{{ comment.commentCreator.username }}</span>
+            <span>&middot;</span>
+            <span>{{ comment.createdAt }}</span>
+          </div>
+
+          @if (comment.content) {
+            <p class="text-[14px] text-slate-800 wrap-break-word">
+              {{ comment.content }}
+            </p>
+          }
+
+          @if (comment.image) {
+            <img [src]="comment.image" class="h-[150px] object-cover mt-2" alt="" />
+          }
+        </div>
+
+        <!-- Like / Reply / Menu -->
+        <div class="flex items-center gap-3 mt-1 ml-2 text-[12px] text-slate-500 font-semibold">
+          <button class="cursor-pointer hover:underline">Like ({{ comment.likes.length }})</button>
+
+          <button class="cursor-pointer hover:underline">Reply {{ comment.repliesCount }}</button>
+
+          <!-- Dropdown -->
+          <div class="relative group/menu">
+            <button
+              type="button"
+              class="w-6 h-6 flex items-center justify-center rounded-full hover:bg-slate-100 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity"
+            >
+              <i class="fa-solid fa-ellipsis"></i>
+            </button>
+
+            <div class="absolute left-0 top-full pt-1 hidden group-hover/menu:block z-20">
+              <div class="bg-white border border-slate-200 rounded-xl shadow-lg py-1 w-40">
+                <!-- Update Button -->
+                <button
+                  (click)="startEdit(comment)"
+                  type="button"
+                  class="w-full text-left px-3 py-2 text-[13px] text-slate-700 hover:bg-slate-100 cursor-pointer"
+                >
+                  Update comment
+                </button>
+
+                <!-- Delete Button -->
+                <button
+                  (click)="deleteComm(comment._id)"
+                  type="button"
+                  class="w-full text-left px-3 py-2 text-[13px] text-red-600 hover:bg-slate-100 cursor-pointer"
+                >
+                  Delete comment
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Edit Comment Form (Outside Dropdown) -->
+        @if (editingCommentId === comment._id) {
+          <div class="w-full mt-3 bg-white border border-slate-200 rounded-xl p-3 shadow-sm">
+            <p class="text-sm font-semibold text-slate-700 mb-2">Edit your comment</p>
+
+            <textarea
+              [formControl]="editCommentContent"
+              rows="3"
+              class="w-full border border-slate-200 rounded-xl p-3 text-sm text-slate-800 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 resize-none"
+              placeholder="Edit your comment..."
+            ></textarea>
+
+            <div class="flex justify-end gap-2 mt-3">
+              <button
+                (click)="updateComm(comment._id)"
+                type="button"
+                class="bg-blue-600 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Save Changes
+              </button>
+
+              <button
+                (click)="cancelEdit()"
+                type="button"
+                class="bg-slate-100 text-slate-700 text-sm font-semibold px-4 py-2 rounded-lg hover:bg-slate-200 transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Add Comment -->
+  <div class="flex items-center gap-2 mt-3 pt-3 border-t border-slate-200">
+    <input
+      [formControl]="commentContent"
+      (keyup.enter)="sendComment()"
+      type="text"
+      placeholder="اكتب تعليق..."
+      class="flex-1 min-w-0 bg-slate-100 rounded-full px-4 py-2 text-[14px] text-slate-800 outline-none focus:ring-2 focus:ring-blue-200"
+    />
+
+    <button
+      (click)="sendComment()"
+      type="button"
+      class="shrink-0 bg-blue-600 text-white text-[13px] font-bold px-4 py-2 rounded-full cursor-pointer hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+    >
+      Send
+    </button>
+  </div>
+</section>

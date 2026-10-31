@@ -1,0 +1,426 @@
+<section class="min-h-screen bg-secondColor px-6 py-8 flex items-center">
+  <div class="mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-[1fr_460px]">
+    <!-- LEFT: brand + about -->
+    <div class="lg:pr-10">
+      <h1 class="text-6xl font-extrabold tracking-tight text-mainColor">Route Posts</h1>
+      <p class="mt-6 max-w-xl text-2xl text-slate-800">
+        Connect with friends and the world around you on Route Posts.
+      </p>
+
+      <div class="mt-8 rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm">
+        <p class="text-sm font-bold uppercase tracking-[0.2em] text-mainColor">
+          About Route Academy
+        </p>
+        <h2 class="mt-2 text-xl font-bold text-slate-900">
+          Egypt's Leading IT Training Center Since 2012
+        </h2>
+        <p class="mt-3 leading-7 text-slate-600">
+          Route Academy is the premier IT training center in Egypt, established in 2012. We
+          specialize in delivering high-quality training courses in programming, web development,
+          and application development. We've identified the unique challenges people may face when
+          learning new technology and made efforts to provide strategies to overcome them.
+        </p>
+        <div class="mt-5 grid grid-cols-3 gap-3">
+          <div class="rounded-xl border border-blue-100 bg-blue-50/60 px-4 py-3">
+            <p class="text-lg font-bold text-mainColor">2012</p>
+            <p class="text-xs font-semibold uppercase text-slate-500">Founded</p>
+          </div>
+          <div class="rounded-xl border border-blue-100 bg-blue-50/60 px-4 py-3">
+            <p class="text-lg font-bold text-mainColor">40K+</p>
+            <p class="text-xs font-semibold uppercase text-slate-500">Graduates</p>
+          </div>
+          <div class="rounded-xl border border-blue-100 bg-blue-50/60 px-4 py-3">
+            <p class="text-lg font-bold text-mainColor">50+</p>
+            <p class="text-xs font-semibold uppercase text-slate-500">Partner companies</p>
+          </div>
+          <div class="rounded-xl border border-blue-100 bg-blue-50/60 px-4 py-3">
+            <p class="text-lg font-bold text-mainColor">5</p>
+            <p class="text-xs font-semibold uppercase text-slate-500">Branches</p>
+          </div>
+          <div class="rounded-xl border border-blue-100 bg-blue-50/60 px-4 py-3">
+            <p class="text-lg font-bold text-mainColor">20</p>
+            <p class="text-xs font-semibold uppercase text-slate-500">Diplomas available</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: your card -->
+    <div class="container bg-white rounded-lg shadow-lg border border-gray-300 p-4 max-w-3xl">
+      <div class="mb-6 grid grid-cols-2 rounded-xl bg-secondColor p-1.5">
+        <button
+          type="button"
+          routerLink="/login"
+          class="h-11 cursor-pointer rounded-lg text-sm font-bold text-mainColor/80"
+        >
+          Login
+        </button>
+        <button
+          type="button"
+          class="h-11 rounded-lg bg-white text-sm font-bold text-mainColor shadow"
+        >
+          Register
+        </button>
+      </div>
+
+      <h1 class="text-3xl">Create a new account</h1>
+      <p class="text-gray-500">It is quick and easy.</p>
+      <form [formGroup]="registerForm" (ngSubmit)="submitForm()" class="grid gap-3">
+        <div class="relative">
+          <input
+            [class]="{
+              'border-green-700': registerForm.get('name')?.valid,
+              'border-red-700':
+                registerForm.get('name')?.invalid && registerForm.get('name')?.touched,
+            }"
+            formControlName="name"
+            type="text"
+            id="fullName"
+            class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+            placeholder=" "
+          />
+          <label
+            for="fullName"
+            class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto inset-s-1"
+            >fullName</label
+          >
+        </div>
+        @if (registerForm.get('name')?.invalid && registerForm.get('name')?.touched) {
+          <div
+            class="flex p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
+            role="alert"
+          >
+            <svg
+              class="w-4 h-4 me-2 shrink-0"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+            <span class="sr-only">Danger</span>
+            <div>
+              <span class="font-medium">Ensure that these requirements are met:</span>
+              <ul class="mt-2 list-disc list-outside space-y-1 ps-2.5">
+                @if (registerForm.get('name')?.hasError('required')) {
+                  <li>FullName is Required</li>
+                } @else if (registerForm.get('name')?.hasError('minlength')) {
+                  <li>Name must be at least 3 charachters</li>
+                }
+              </ul>
+            </div>
+          </div>
+        }
+        <div class="relative">
+          <input
+            formControlName="username"
+            type="text"
+            id="userName"
+            class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+            placeholder=" "
+          />
+          <label
+            for="userName"
+            class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto inset-s-1"
+            >userName (optional)
+          </label>
+        </div>
+        <div class="relative">
+          <input
+            [class]="{
+              'border-green-700': registerForm.get('email')?.valid,
+              'border-red-700':
+                registerForm.get('email')?.invalid && registerForm.get('email')?.touched,
+            }"
+            formControlName="email"
+            type="email"
+            id="email"
+            class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+            placeholder=" "
+          />
+          <label
+            for="email"
+            class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto inset-s-1"
+          >
+            email
+          </label>
+        </div>
+        @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+          <div
+            class="flex p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
+            role="alert"
+          >
+            <svg
+              class="w-4 h-4 me-2 shrink-0"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+            <span class="sr-only">Danger</span>
+            <div>
+              <span class="font-medium">Ensure that these requirements are met:</span>
+              <ul class="mt-2 list-disc list-outside space-y-1 ps-2.5">
+                @if (registerForm.get('email')?.hasError('required')) {
+                  <li>Email is Required</li>
+                } @else if (registerForm.get('email')?.hasError('email')) {
+                  <li>Please Enter a Valid Email</li>
+                }
+              </ul>
+            </div>
+          </div>
+        }
+        <div class="relative">
+          <select
+            [class]="{
+              'border-green-700': registerForm.get('gender')?.valid,
+              'border-red-700':
+                registerForm.get('gender')?.invalid && registerForm.get('gender')?.touched,
+            }"
+            formControlName="gender"
+            id="gender"
+            class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+            placeholder=" "
+          >
+            <option selected disabled hidden>select gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+          <label
+            for="gender"
+            class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto inset-s-1"
+            >gender</label
+          >
+        </div>
+        @if (registerForm.get('gender')?.invalid && registerForm.get('gender')?.touched) {
+          <div
+            class="flex p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
+            role="alert"
+          >
+            <svg
+              class="w-4 h-4 me-2 shrink-0"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+            <span class="sr-only">Danger</span>
+            <div>
+              <span class="font-medium">Ensure that these requirements are met:</span>
+              <ul class="mt-2 list-disc list-outside space-y-1 ps-2.5">
+                <li>Email is Required</li>
+              </ul>
+            </div>
+          </div>
+        }
+        <div class="relative">
+          <input
+            [class]="{
+              'border-green-700': registerForm.get('dateOfBirth')?.valid,
+              'border-red-700':
+                registerForm.get('dateOfBirth')?.invalid &&
+                registerForm.get('dateOfBirth')?.touched,
+            }"
+            formControlName="dateOfBirth"
+            type="date"
+            id="date"
+            class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+            placeholder=" "
+          />
+          <label
+            for="date"
+            class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto inset-s-1"
+            >date</label
+          >
+        </div>
+        @if (registerForm.get('dateOfBirth')?.invalid && registerForm.get('dateOfBirth')?.touched) {
+          <div
+            class="flex p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
+            role="alert"
+          >
+            <svg
+              class="w-4 h-4 me-2 shrink-0"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+            <span class="sr-only">Danger</span>
+            <div>
+              <span class="font-medium">Ensure that these requirements are met:</span>
+              <ul class="mt-2 list-disc list-outside space-y-1 ps-2.5">
+                <li>Email is Required</li>
+              </ul>
+            </div>
+          </div>
+        }
+        <div class="relative">
+          <input
+            [class]="{
+              'border-green-700': registerForm.get('password')?.valid,
+              'border-red-700':
+                registerForm.get('password')?.invalid && registerForm.get('password')?.touched,
+            }"
+            formControlName="password"
+            type="password"
+            id="password"
+            class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+            placeholder=" "
+          />
+          <label
+            for="password"
+            class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto inset-s-1"
+            >password</label
+          >
+        </div>
+        @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+          <div
+            class="flex p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
+            role="alert"
+          >
+            <svg
+              class="w-4 h-4 me-2 shrink-0"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+            <span class="sr-only">Danger</span>
+            <div>
+              <span class="font-medium">Ensure that these requirements are met:</span>
+              <ul class="mt-2 list-disc list-outside space-y-1 ps-2.5">
+                @if (registerForm.get('password')?.hasError('required')) {
+                  <li>password is Required</li>
+                } @else if (registerForm.get('password')?.hasError('pattern')) {
+                  <li>Please Write a Valid Pattern</li>
+                }
+              </ul>
+            </div>
+          </div>
+        }
+        <div class="relative">
+          <input
+            [class]="{
+              'border-green-700': registerForm.get('rePassword')?.valid,
+              'border-red-700':
+                registerForm.get('rePassword')?.invalid && registerForm.get('rePassword')?.touched,
+            }"
+            formControlName="rePassword"
+            type="password"
+            id="repassword"
+            class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+            placeholder=" "
+          />
+          <label
+            for="repassword"
+            class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto inset-s-1"
+            >confirm password</label
+          >
+        </div>
+        @if (registerForm.get('rePassword')?.invalid && registerForm.get('rePassword')?.touched) {
+          <div
+            class="flex p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
+            role="alert"
+          >
+            <svg
+              class="w-4 h-4 me-2 shrink-0"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+            <span class="sr-only">Danger</span>
+            <div>
+              <span class="font-medium">Ensure that these requirements are met:</span>
+              <ul class="mt-2 list-disc list-outside space-y-1 ps-2.5">
+                @if (registerForm.get('rePassword')?.hasError('required')) {
+                  <li>Repassword is Required</li>
+                } @else if (registerForm.get('rePassword')?.hasError('mismatch')) {
+                  <li>password do not match</li>
+                }
+              </ul>
+            </div>
+          </div>
+        }
+        <button
+          type="submit"
+          class="disabled:bg-gray-500 disabled:cursor-not-allowed bg-mainColor p-1.5 rounded text-white cursor-pointer"
+        >
+          Create New Account
+          @if (loading()) {
+            <i class="fas fa-spinner animate-spin"></i>
+          }
+        </button>
+        @if (msgError()) {
+          <p class="text-center text-white bg-red-700 p-2 rounded">{{ msgError() }}</p>
+        }
+        <button
+          routerLink="/login"
+          type="button"
+          class="border mt-2 cursor-pointer border-blue-600 text-blue-600 rounded-full py-2"
+        >
+          I already have an account
+        </button>
+      </form>
+    </div>
+  </div>
+</section>

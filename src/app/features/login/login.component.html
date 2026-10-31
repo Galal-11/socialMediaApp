@@ -1,0 +1,201 @@
+<section class="min-h-screen bg-secondColor px-6 py-8 flex items-center">
+  <div class="mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-[1fr_460px]">
+    <!-- LEFT: brand + about -->
+    <div class="lg:pr-10">
+      <h1 class="text-6xl font-extrabold tracking-tight text-mainColor">Route Posts</h1>
+      <p class="mt-6 max-w-xl text-2xl text-slate-800">
+        Connect with friends and the world around you on Route Posts.
+      </p>
+
+      <div class="mt-8 rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm">
+        <p class="text-sm font-bold uppercase tracking-[0.2em] text-mainColor">
+          About Route Academy
+        </p>
+        <h2 class="mt-2 text-xl font-bold text-slate-900">
+          Egypt's Leading IT Training Center Since 2012
+        </h2>
+        <p class="mt-3 leading-7 text-slate-600">
+          Route Academy is the premier IT training center in Egypt, established in 2012. We
+          specialize in delivering high-quality training courses in programming, web development,
+          and application development. We've identified the unique challenges people may face when
+          learning new technology and made efforts to provide strategies to overcome them.
+        </p>
+        <div class="mt-5 grid grid-cols-3 gap-3">
+          <div class="rounded-xl border border-blue-100 bg-blue-50/60 px-4 py-3">
+            <p class="text-lg font-bold text-mainColor">2012</p>
+            <p class="text-xs font-semibold uppercase text-slate-500">Founded</p>
+          </div>
+          <div class="rounded-xl border border-blue-100 bg-blue-50/60 px-4 py-3">
+            <p class="text-lg font-bold text-mainColor">40K+</p>
+            <p class="text-xs font-semibold uppercase text-slate-500">Graduates</p>
+          </div>
+          <div class="rounded-xl border border-blue-100 bg-blue-50/60 px-4 py-3">
+            <p class="text-lg font-bold text-mainColor">50+</p>
+            <p class="text-xs font-semibold uppercase text-slate-500">Partner companies</p>
+          </div>
+          <div class="rounded-xl border border-blue-100 bg-blue-50/60 px-4 py-3">
+            <p class="text-lg font-bold text-mainColor">5</p>
+            <p class="text-xs font-semibold uppercase text-slate-500">Branches</p>
+          </div>
+          <div class="rounded-xl border border-blue-100 bg-blue-50/60 px-4 py-3">
+            <p class="text-lg font-bold text-mainColor">20</p>
+            <p class="text-xs font-semibold uppercase text-slate-500">Diplomas available</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: your card -->
+    <div class="container bg-white rounded-lg shadow-lg border border-gray-300 p-4 max-w-3xl">
+      <div class="mb-6 grid grid-cols-2 rounded-xl bg-secondColor p-1.5">
+        <button
+          type="button"
+          class="h-11 rounded-lg bg-white text-sm font-bold text-mainColor shadow"
+        >
+          Login
+        </button>
+        <button
+          type="button"
+          routerLink="/register"
+          class="h-11 cursor-pointer rounded-lg text-sm font-bold text-mainColor/80"
+        >
+          Register
+        </button>
+      </div>
+
+      <h1 class="text-3xl">Log in to Route Posts</h1>
+      <p class="text-gray-500">Log in and continue your social journey.</p>
+      <form [formGroup]="loginForm" (ngSubmit)="submitForm()" class="grid gap-3">
+        <div class="relative">
+          <input
+            [class]="{
+              'border-green-700': loginForm.get('email')?.valid,
+              'border-red-700': loginForm.get('email')?.invalid && loginForm.get('email')?.touched,
+            }"
+            formControlName="login"
+            type="text"
+            id="email"
+            class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+            placeholder=" "
+          />
+          <label
+            for="email"
+            class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto inset-s-1"
+          >
+            userName or email
+          </label>
+        </div>
+        @if (loginForm.get('login')?.invalid && loginForm.get('login')?.touched) {
+          <div
+            class="flex p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
+            role="alert"
+          >
+            <svg
+              class="w-4 h-4 me-2 shrink-0"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+            <span class="sr-only">Danger</span>
+            <div>
+              <span class="font-medium">Ensure that these requirements are met:</span>
+              <ul class="mt-2 list-disc list-outside space-y-1 ps-2.5">
+                @if (loginForm.get('login')?.hasError('required')) {
+                  <li>userName or Email is Required</li>
+                } @else if (loginForm.get('login')?.hasError('minlength')) {
+                  <li>minLength charachter is 3</li>
+                }
+              </ul>
+            </div>
+          </div>
+        }
+
+        <div class="relative">
+          <input
+            [class]="{
+              'border-green-700': loginForm.get('password')?.valid,
+              'border-red-700':
+                loginForm.get('password')?.invalid && loginForm.get('password')?.touched,
+            }"
+            formControlName="password"
+            type="password"
+            id="password"
+            class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+            placeholder=" "
+          />
+          <label
+            for="password"
+            class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto inset-s-1"
+            >password</label
+          >
+        </div>
+        @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+          <div
+            class="flex p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
+            role="alert"
+          >
+            <svg
+              class="w-4 h-4 me-2 shrink-0"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+            <span class="sr-only">Danger</span>
+            <div>
+              <span class="font-medium">Ensure that these requirements are met:</span>
+              <ul class="mt-2 list-disc list-outside space-y-1 ps-2.5">
+                @if (loginForm.get('password')?.hasError('required')) {
+                  <li>password is Required</li>
+                } @else if (loginForm.get('password')?.hasError('pattern')) {
+                  <li>Please Write a Valid Pattern</li>
+                }
+              </ul>
+            </div>
+          </div>
+        }
+
+        <button
+          type="submit"
+          class="disabled:bg-gray-500 disabled:cursor-not-allowed bg-mainColor p-1.5 rounded text-white cursor-pointer"
+        >
+          login
+          @if (loading()) {
+            <i class="fas fa-spinner animate-spin"></i>
+          }
+        </button>
+        @if (msgError()) {
+          <p class="text-center text-white bg-red-700 p-2 rounded">{{ msgError() }}</p>
+        }
+        <button
+          routerLink="/register"
+          type="button"
+          class="border mt-2 cursor-pointer border-blue-600 text-blue-600 rounded-full py-2"
+        >
+          Create new Account
+        </button>
+      </form>
+    </div>
+  </div>
+</section>

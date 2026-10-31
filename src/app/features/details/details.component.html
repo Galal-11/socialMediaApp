@@ -1,0 +1,138 @@
+@let post = allDetails();
+<div class="min-h-screen bg-slate-100 px-4 py-8">
+  <article
+    class="mx-auto max-w-xl overflow-hidden rounded-3xl bg-white shadow-xl shadow-slate-300/50"
+  >
+    <!-- header -->
+    <header class="flex items-center gap-3 p-5">
+      <div
+        class="grid size-12 shrink-0 place-items-center rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 text-lg font-bold text-white"
+      >
+        A
+      </div>
+
+      <div class="min-w-0 flex-1">
+        <h2 class="truncate font-bold text-slate-900">{{ post.user.name }}</h2>
+        <p class="flex items-center gap-2 text-xs text-slate-500">
+          {{ post.createdAt }}
+          <span class="rounded-full bg-violet-100 px-2 py-0.5 font-semibold text-violet-700">{{
+            post.privacy
+          }}</span>
+        </p>
+      </div>
+
+      <button
+        type="button"
+        aria-label="Bookmark"
+        class="rounded-xl p-2 text-slate-400 transition hover:bg-slate-100"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          class="size-6"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linejoin="round"
+        >
+          <path d="M6 3h12v18l-6-4-6 4z" />
+        </svg>
+      </button>
+    </header>
+
+    <!-- body -->
+    <div class="px-5 pb-5">
+      <p class="text-xl leading-relaxed text-slate-900">{{ post.body }}</p>
+    </div>
+
+    <!-- counts -->
+    <div class="flex items-center gap-5 border-t border-slate-100 px-5 py-3 text-sm text-slate-500">
+      <span
+        ><b class="text-slate-900">{{ post.likesCount }}</b> likes</span
+      >
+      <span
+        ><b class="text-slate-900">{{ post.commentsCount }}</b> comments</span
+      >
+      <span
+        ><b class="text-slate-900">{{ post.sharesCount }}</b> shares</span
+      >
+    </div>
+
+    <!-- actions -->
+    <div class="grid grid-cols-3 gap-2 border-t border-slate-100 p-2">
+      <button
+        type="button"
+        class="flex items-center justify-center gap-2 rounded-xl py-2.5 font-semibold text-slate-600 transition hover:bg-rose-50 hover:text-rose-500"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          class="size-5"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linejoin="round"
+        >
+          <path
+            d="M12 21s-7-4.4-9.3-9A5.3 5.3 0 0 1 12 6a5.3 5.3 0 0 1 9.3 6c-2.3 4.6-9.3 9-9.3 9z"
+          />
+        </svg>
+        Like
+      </button>
+      <button
+        type="button"
+        class="flex items-center justify-center gap-2 rounded-xl py-2.5 font-semibold text-slate-600 transition hover:bg-violet-50 hover:text-violet-600"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          class="size-5"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linejoin="round"
+        >
+          <path d="M4 5h16v11H9l-5 4z" />
+        </svg>
+        <!-- {{ post.topComment }} -->
+      </button>
+      <button
+        type="button"
+        class="flex items-center justify-center gap-2 rounded-xl py-2.5 font-semibold text-slate-600 transition hover:bg-emerald-50 hover:text-emerald-600"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          class="size-5"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M4 12v7h16v-7M12 3v12M7 8l5-5 5 5" />
+        </svg>
+
+        @if (post.sharedPost) {
+          {{ post.sharedPost }}
+        }
+      </button>
+    </div>
+
+    <!-- top comment -->
+    <section class="bg-slate-50 p-5">
+      @if (post.topComment.length !== null) {
+        <div class="flex gap-3">
+          <div
+            class="grid size-9 shrink-0 place-items-center rounded-full bg-slate-800 text -sm font-bold text-white"
+          >
+            <img [src]="post.topComment.commentCreator.photo" alt="" />
+            <!-- {{ post.topComment.commentCreator.photo }} -->
+          </div>
+          <div class="rounded-2xl rounded-tl-sm bg-white px-4 py-2.5 shadow-sm">
+            <p class="text-sm font-bold text-slate-900">
+              {{ post.topComment?.commentCreator.name }}
+            </p>
+            <p class="text-slate-700">{{ post.topComment?.content }}</p>
+          </div>
+        </div>
+      }
+    </section>
+  </article>
+</div>
