@@ -67,12 +67,14 @@ export class PostsComponent implements OnInit {
     }
     if (this.files()) {
       formData.append('image', this.files()!);
+      this.imgSrc.set('');
     }
 
     this.postsService.createPost(formData).subscribe({
       next: (res) => {
         console.log(res);
         this.getPostsData();
+        this.imgSrc.set('');
       },
       error: (err) => {
         console.log(err);
