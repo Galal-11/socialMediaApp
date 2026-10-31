@@ -1,4 +1,10 @@
-import { AbstractControl, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  ReactiveFormsModule,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { AuthService } from './../../core/auth/services/auth.service';
 import { Component, inject, signal } from '@angular/core';
 import { LoginComponent } from '../login/login.component';
@@ -17,9 +23,23 @@ export class ChangePasswordComponent {
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
   private readonly tempAuthServiceService = inject(TempAuthServiceService);
+
+  checkPassword: ValidatorFn = (control: AbstractControl) => {
+    if (!control.value) {
+      return null;
+    }
+
+    if (control.value !== this.tempAuthServiceService.password) {
+      console.log(control.value === this.tempAuthServiceService.password);
+      return { incorrectPassword: true };
+    }
+
+    return null;
+  };
+
   form = this.fb.group(
     {
-      Password: ['', Validators.required],
+      Password: ['', [Validators.required, this.checkPassword]],
       newPassword: [
         '',
         [
@@ -43,7 +63,7 @@ export class ChangePasswordComponent {
         next: (res) => {
           console.log(res);
 
-          this.tempAuthServiceService.password = this.newPass?.value ?? '';
+          this.tempAuthServiceService.password = this.form.value.newPassword ?? '';
           this.form.reset();
         },
         error: (err) => {
@@ -61,20 +81,8 @@ export class ChangePasswordComponent {
       return null;
     }
   }
-  errMsg = signal('');
-  checkPassword(): boolean {
-    const current = this.form.get('Password');
-    if (this.tempAuthServiceService.password !== this.currentPass?.value) {
-      this.errMsg.set('password is invalid');
-      return false;
-    }
-    this.errMsg.set('');
+  // errMsg = signal('');
 
-    return true;
-  }
-  readonly newPass = this.form.get('newPassword');
-  readonly currentPass = this.form.get('currentPassword');
-  readonly confirmPass = this.form.get('confirmPassword');
   // updatePassword(): void {
   //   this.tempAuthServiceService.password = this.newPass?.value ?? '';
   //   this.newPass?.setValue('');
